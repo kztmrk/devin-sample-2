@@ -1,7 +1,7 @@
 project:
-  name: "streamlit-chatgpt-bot"
-  description: "シンプルなStreamlitベースのChatGPTチャットボット"
-  version: "1.0.0"
+  name: "streamlit-llm-agent-bot"
+  description: "独自のLLM Agentを使用したStreamlitベースのチャットボット"
+  version: "1.1.0"
 
 dependencies:
   python:
@@ -10,6 +10,7 @@ dependencies:
       - streamlit: "^1.32.0"
       - openai: "^1.12.0"
       - python-dotenv: "^1.0.0"
+      - langchain: "^0.1.0"  # LLM Agentフレームワーク
 
 architecture:
   components:
@@ -20,15 +21,34 @@ architecture:
         - "UIレイアウトの管理"
         - "APIキーの入力処理"
         - "チャットセッションの管理"
-        - "ChatGPT APIとの通信"
+        - "LLM Agentとの通信"
 
     - name: "chat_manager"
       type: "python_module"
       description: "チャット機能の管理"
       responsibilities:
-        - "ChatGPT APIとの通信処理"
+        - "LLM Agentとの通信処理"
         - "メッセージの送受信"
         - "エラーハンドリング"
+        - "LLM Agentの初期化と設定"
+
+    - name: "llm_agent"
+      type: "python_module"
+      description: "カスタムLLM Agent"
+      responsibilities:
+        - "LLMモデルとの通信"
+        - "プロンプトエンジニアリング"
+        - "応答の生成と処理"
+        - "コンテキスト管理"
+        - "ツールの統合と実行"
+
+    - name: "agent_tools"
+      type: "python_module"
+      description: "LLM Agentが使用するツール群"
+      responsibilities:
+        - "特定のタスクを実行するツールの提供"
+        - "ツールの入出力インターフェース定義"
+        - "ツールの実行ロジック"
 
 file_structure:
   root:
@@ -37,6 +57,15 @@ file_structure:
     - "src/"
       - "main.py"
       - "chat_manager.py"
+      - "agents/"
+        - "__init__.py"
+        - "llm_agent.py"
+        - "base_agent.py"
+        - "tools/"
+          - "__init__.py"
+          - "base_tool.py"
+          - "search_tool.py"
+          - "calculator_tool.py"
     - ".gitignore"
 
 features:
@@ -45,6 +74,8 @@ features:
     - "シンプルなチャットインターフェース"
     - "メッセージの送受信"
     - "エラー表示"
+    - "カスタムLLM Agentによる応答生成"
+    - "ツールを使用した拡張機能"
   
   ui:
     - "シンプルな2カラムレイアウト"
@@ -53,31 +84,73 @@ features:
     - "APIキー入力フィールド"
     - "メッセージ入力フィールド"
     - "送信ボタン"
+    - "ツール使用状況の表示"
+
+  agent:
+    - "カスタムLLM Agent"
+    - "プロンプトエンジニアリング"
+    - "コンテキスト管理"
+    - "ツール統合フレームワーク"
+    - "応答生成ロジック"
+
+  tools:
+    - "基本ツールインターフェース"
+    - "検索ツール"
+    - "計算ツール"
+    - "拡張可能なツールシステム"
 
 error_handling:
   - "APIキー未入力時のエラー処理"
   - "API通信エラー時のエラー処理"
   - "入力値バリデーション"
+  - "ツール実行エラー処理"
+  - "LLM Agent初期化エラー処理"
 
 security:
   - "APIキーのセッション管理"
   - "入力値のサニタイズ"
+  - "ツール実行の権限管理"
+  - "外部APIアクセスの制限"
 
 performance:
   - "同時接続ユーザー数: 2"
   - "メモリ使用量の最適化"
   - "不要な状態保持の排除"
+  - "LLMモデル呼び出しの最適化"
+  - "ツール実行のキャッシュ"
 
 development_workflow:
   setup:
     - "Python仮想環境の作成"
     - "依存パッケージのインストール"
     - "環境変数の設定"
+    - "ツール設定の構成"
   
   running:
     - "Streamlitアプリケーションの起動"
     - "ローカルホストでのアクセス"
+    - "ツールのデバッグモード"
 
 testing:
   - "基本的な機能テスト"
-  - "エラーケースのテスト" 
+  - "エラーケースのテスト"
+  - "LLM Agent機能テスト"
+  - "ツール統合テスト"
+  - "エンドツーエンドテスト"
+
+implementation_phases:
+  phase1:
+    - "基本的なLLM Agentアーキテクチャの設計"
+    - "プロジェクト構造の更新"
+    - "ドキュメントの更新"
+  
+  phase2:
+    - "基本的なLLM Agentの実装"
+    - "ChatManagerとの統合"
+    - "基本ツールインターフェースの実装"
+  
+  phase3:
+    - "追加ツールの実装"
+    - "UIの拡張"
+    - "テストの追加"
+    - "パフォーマンス最適化"    
