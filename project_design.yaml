@@ -1,0 +1,83 @@
+project:
+  name: "streamlit-chatgpt-bot"
+  description: "シンプルなStreamlitベースのChatGPTチャットボット"
+  version: "1.0.0"
+
+dependencies:
+  python:
+    version: ">=3.8"
+    packages:
+      - streamlit: "^1.32.0"
+      - openai: "^1.12.0"
+      - python-dotenv: "^1.0.0"
+
+architecture:
+  components:
+    - name: "main_app"
+      type: "streamlit_application"
+      description: "メインアプリケーション"
+      responsibilities:
+        - "UIレイアウトの管理"
+        - "APIキーの入力処理"
+        - "チャットセッションの管理"
+        - "ChatGPT APIとの通信"
+
+    - name: "chat_manager"
+      type: "python_module"
+      description: "チャット機能の管理"
+      responsibilities:
+        - "ChatGPT APIとの通信処理"
+        - "メッセージの送受信"
+        - "エラーハンドリング"
+
+file_structure:
+  root:
+    - "requirements.txt"
+    - "README.md"
+    - "src/"
+      - "main.py"
+      - "chat_manager.py"
+    - ".gitignore"
+
+features:
+  chat:
+    - "APIキーの動的入力"
+    - "シンプルなチャットインターフェース"
+    - "メッセージの送受信"
+    - "エラー表示"
+  
+  ui:
+    - "シンプルな2カラムレイアウト"
+      - "左側: チャット履歴"
+      - "右側: 入力エリア"
+    - "APIキー入力フィールド"
+    - "メッセージ入力フィールド"
+    - "送信ボタン"
+
+error_handling:
+  - "APIキー未入力時のエラー処理"
+  - "API通信エラー時のエラー処理"
+  - "入力値バリデーション"
+
+security:
+  - "APIキーのセッション管理"
+  - "入力値のサニタイズ"
+
+performance:
+  - "同時接続ユーザー数: 2"
+  - "メモリ使用量の最適化"
+  - "不要な状態保持の排除"
+
+development_workflow:
+  setup:
+    - "Python仮想環境の作成"
+    - "依存パッケージのインストール"
+    - "環境変数の設定"
+  
+  running:
+    - "Streamlitアプリケーションの起動"
+    - "ローカルホストでのアクセス"
+
+testing:
+  - "基本的な機能テスト"
+  - "エラーケースのテスト" 
